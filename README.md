@@ -1,4 +1,6 @@
-# 4-BIT-RIPPLE-COUNTER
+# REG.NO: 212224110035
+# DATE: 17-05-2025
+## 4-BIT-RIPPLE-COUNTER
 
 **AIM:**
 
@@ -27,14 +29,74 @@ In timing diagram Q0 is changing as soon as the negative edge of clock pulse is 
 /* write all the steps invloved */
 
 **PROGRAM**
+```
+module exp12(
+    input wire clk,        // Clock input
+    input wire reset,      // Asynchronous reset
+    output wire [3:0] q    // 4-bit output
+);
 
-/* Program for 4 Bit Ripple Counter and verify its truth table in quartus using Verilog programming.
+    wire clk1, clk2, clk3;
 
- Developed by: RegisterNumber:
-*/
+    // First flip-flop (LSB)
+    T_FF tff0 (
+        .clk(clk),
+        .reset(reset),
+        .q(q[0]),
+        .clk_out(clk1)
+    );
 
+    // Second flip-flop
+    T_FF tff1 (
+        .clk(clk1),
+        .reset(reset),
+        .q(q[1]),
+        .clk_out(clk2)
+    );
+
+    // Third flip-flop
+    T_FF tff2 (
+        .clk(clk2),
+        .reset(reset),
+        .q(q[2]),
+        .clk_out(clk3)
+    );
+
+    // Fourth flip-flop (MSB)
+    T_FF tff3 (
+        .clk(clk3),
+        .reset(reset),
+        .q(q[3]),
+        .clk_out()
+    );
+
+endmodule
+
+// Toggle Flip-Flop Module
+module T_FF (
+    input wire clk,
+    input wire reset,
+    output reg q,
+    output wire clk_out
+);
+    assign clk_out = q;  // Output to next stage
+
+    always @(negedge clk or posedge reset) begin
+        if (reset)
+            q <= 0;
+        else
+            q <= ~q;
+    end
+endmodule
+```
 **RTL LOGIC FOR 4 Bit Ripple Counter**
+
+![Screenshot (244)](https://github.com/user-attachments/assets/2010f620-acbb-4971-a932-2d85d29d2a84)
 
 **TIMING DIGRAMS FOR 4 Bit Ripple Counter**
 
+![Screenshot (245)](https://github.com/user-attachments/assets/3fe219c6-749e-4e0e-9f14-10aabb647ee4)
+
 **RESULTS**
+
+Thus the implemented 4-BIT-RIPPLE-COUNTER was successfully verified.
